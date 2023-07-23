@@ -1,0 +1,16 @@
+.waviy {
+    position: relative;
+}
+.waviy span {
+    /* position: relative; */
+    margin-right: -12px;
+    display: inline-block;
+    letter-spacing: 0px;
+    animation: flip 3s infinite;
+    animation-delay: calc(.1s * var(--i))
+}
+@keyframes flip {
+    0%,50% {
+    transform: rotateY(360deg) 
+    }
+}
