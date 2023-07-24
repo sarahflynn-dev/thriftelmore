@@ -94,6 +94,11 @@ class User:
             flash("Date of birth must be entered.", "register")
             is_valid = False
 
+        # FUTURE DATE OF BIRTH VALIDATION
+        if user['date_of_birth'] > str(request.form['today']):
+            flash("Date of birth cannot be in the future.", "register")
+            is_valid = False
+
         # USERNAME VALIDATION
         if len(user['username']) < 2:
             flash("Username must be at least 2 characters long.", "register")
@@ -104,6 +109,7 @@ class User:
             flash("Password must be at least 8 characters long.", "register")
             is_valid = False
 
+        # CONFIRM PASSWORD VALIDATION
         if user['password'] != user['confirm_password']:
             flash("Passwords do not match.", "register")
             is_valid = False
