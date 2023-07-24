@@ -103,3 +103,35 @@ class Items:
         query = "DELETE FROM items WHERE id = %(id)s;"
         results = connectToMySQL(cls.db).query_db(query, data)
         return results
+
+    # VALIDATE ITEM
+    @staticmethod
+    def validate_item(data):
+        is_valid = True
+
+        # Item Name
+        if len(data['item_name']) < 3:
+            flash("Item name must be at least 3 characters.")
+            is_valid = False
+
+        # Item Type
+        if len(data['item_type']) < 3:
+            flash("Item type must be at least 3 characters.")
+            is_valid = False
+
+        # Item Description
+        if len(data['item_description']) < 3:
+            flash("Item description must be at least 3 characters.")
+            is_valid = False
+
+        # Item Price
+        if len(data['item_price']) < 1:
+            flash("Item price must be at least 1 character.")
+            is_valid = False
+
+        # Item Picture
+        if len(data['item_picture']) < 1:
+            flash("Item picture must be at least 1 character.")
+            is_valid = False
+
+        return is_valid

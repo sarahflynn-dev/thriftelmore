@@ -98,3 +98,18 @@ class Review:
         results = connectToMySQL(cls.db).query_db(query, data)
 
         return results
+
+    # VALIDATE REVIEW
+    @staticmethod
+    def validate_review(data):
+        is_valid = True
+
+        if len(data['review']) < 1:
+            flash("Review cannot be empty.")
+            is_valid = False
+
+        if len(data['image']) < 1:
+            flash("Image cannot be empty.")
+            is_valid = False
+
+        return is_valid
