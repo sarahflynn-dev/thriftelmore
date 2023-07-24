@@ -16,12 +16,17 @@ class Review:
 
         self.reviewed_items = []
 
-    # SAVE REVIEW
+    # SAVE REVIEW FROM USER
     @classmethod
-    def save(cls, data):
-        query = "INSERT INTO reviews (review, image, created_at, updated_at) VALUES (%(review)s, %(image)s, NOW(), NOW());"
+    def save_review(cls, data):
+        query = """
+        INSERT INTO reviews (review, image, created_at, updated_at, user_id, item_id)
+        VALUES (%(review)s, %(image)s, NOW(), NOW(), %(user_id)s, %(item_id)s);
+        """
 
-        return connectToMySQL(cls.db).query_db(query, data)
+        results = connectToMySQL(cls.db).query_db(query, data)
+
+        return results
 
     # GET ITEMS WITH REVIEWS
     @classmethod
