@@ -16,12 +16,17 @@ class Review:
 
         self.reviewed_items = []
 
-    # SAVE REVIEW
+    # SAVE REVIEW FROM USER
     @classmethod
-    def save(cls, data):
-        query = "INSERT INTO reviews (review, image, created_at, updated_at) VALUES (%(review)s, %(image)s, NOW(), NOW());"
+    def save_review(cls, data):
+        query = """
+        INSERT INTO reviews (review, image, created_at, updated_at, user_id, item_id)
+        VALUES (%(review)s, %(image)s, NOW(), NOW(), %(user_id)s, %(item_id)s);
+        """
 
-        return connectToMySQL(cls.db).query_db(query, data)
+        results = connectToMySQL(cls.db).query_db(query, data)
+
+        return results
 
     # GET ITEMS WITH REVIEWS
     @classmethod
@@ -93,3 +98,18 @@ class Review:
         results = connectToMySQL(cls.db).query_db(query, data)
 
         return results
+
+    # VALIDATE REVIEW
+    @staticmethod
+    def validate_review(data):
+        is_valid = True
+
+        if len(data['review']) < 1:
+            flash("Review cannot be empty.")
+            is_valid = False
+
+        if len(data['image']) < 1:
+            flash("Image cannot be empty.")
+            is_valid = False
+
+        return is_valid
