@@ -2,6 +2,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash, request
 import re
+from datetime import datetime
 
 # Email Format Validation
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
@@ -95,7 +96,7 @@ class User:
             is_valid = False
 
         # FUTURE DATE OF BIRTH VALIDATION
-        if user['date_of_birth'] > str(request.form['today']):
+        if datetime.strptime(user['date_of_birth'], '%Y-%m-%d') > datetime.now():
             flash("Date of birth cannot be in the future.", "register")
             is_valid = False
 
