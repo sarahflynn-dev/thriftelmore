@@ -1,9 +1,0 @@
-Copy/Paste to install via terminal.
-
-pip install flask
-pip install Flask
-pip install flash
-pip install bcrypt
-pip install flask_bcrypt
-pip install pymysql
-pip install pypi
