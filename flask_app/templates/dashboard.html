@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thriftlemore | Dashboard</title>
+    <link rel="icon" type="svg" href="../static/icon/logo-smile-red.svg" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" />
+    <link rel="stylesheet" type="text/css" href="../static/css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/animations.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <script src="https://kit.fontawesome.com/f65ce6ab07.js" crossorigin="anonymous"></script>
+    <script src="../static/script/refresh.js"></script>
+</head>
+<nav class="breadcrumb is-centered box" aria-label="breadcrumbs">
+    <ul>
+    <li>
+        <a href="/" aria-current="page">Home</a>
+    </li>
+    <li class="is-active">
+        <a href="/login">Dashboard</a>
+    </li>
+    <li>
+        <a href="/login">Sell</a>
+    </li>
+    <li>
+        <a href="/login">Cart</a>
+    </li>
+    <li>
+        <a href="/login">Logout</a>
+    </li>
+    </ul>
+</nav>
+<body style="font-family: coolvetica; letter-spacing: 1px;">
+    <!-- just a title no longer! -->
+    <div class="p-4 has-background-danger-dark has-text-black pb-3">
+        <div style="font-family: mont;" class="d-flex justify-content-between align-items-center" id="title" onmousedown="refresh()" onmouseup="reset()">
+            <div class="d-flex">
+                <div class="logo mx-2"><img src="../static/icon/thriftlo.svg" width="70px" id="logo" /></div>
+                <h1 class="h1 is-italic my-auto">Hello, {{user.first_name}}!</h1>
+            </div>
+            <div class="buttons are-medium">
+                <button class="button is-danger is-inverted">New Post</button>
+                <button class="button is-danger is-inverted">My Cart</button>
+                <button class="button is-danger is-inverted">My Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <!--the post body-->
+    {% for item in items%}
+    {% if item.user_id == session.user_id %}
+            <div class="mx-3 p-3 box d-flex">
+                <div class="image is-128x128">
+                    <img src="https://bulma.io/images/placeholders/128x128.png">
+                </div>
+                <div>
+                    <a href="/"><h2>{{item.item_name}}</h2></a>
+                    <div class="d-flex">
+                        {% if item.user_id == session.user_id %}
+                        <a href="/edit/{{item.id}}">
+                            <button type="submit" class="button is-danger is-outlined">Edit</button>
+                        </a>
+                        <a href="/destroy/{{item.id}}">
+                            <button type="submit" onclick="alert('Are you sure you want to delete your post?')"
+                            class="button is-danger is-outlined">Delete</button>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+    {% endif %}
+    {% endfor %}
+</div>
+</body>
+</html>
