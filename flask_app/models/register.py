@@ -53,7 +53,7 @@ class User:
     # GET USER BY EMAIL
     @classmethod
     def get_by_email(cls, data):
-        query = "SELECT * FROM users WHERE email = %s;"
+        query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connectToMySQL(cls.db).query_db(query, data)
 
         if len(results) < 1:
@@ -71,46 +71,55 @@ class User:
 
     # VALIDATE USER
     @staticmethod
-    def validate_user(user):
+    def validate_user(data):
         is_valid = True
 
         # FIRST NAME VALIDATION
-        if len(user['first_name']) < 2:
+        if len(data['first_name']) < 2:
             flash("First name must be at least 2 characters long.", "register")
             is_valid = False
 
         # LAST NAME VALIDATION
-        if len(user['last_name']) < 2:
+        if len(data['last_name']) < 2:
             flash("Last name must be at least 2 characters long.", "register")
             is_valid = False
 
-        # EMAIL VALIDATION
-        if not EMAIL_REGEX.match(user['email']):
-            flash("Invalid email address.", "register")
-            is_valid = False
-
         # DATE OF BIRTH VALIDATION
-        if user['date_of_birth'] == "":
+        if data['date_of_birth'] == "":
             flash("Date of birth must be entered.", "register")
             is_valid = False
 
-        # FUTURE DATE OF BIRTH VALIDATION
-        if user['date_of_birth'] > str(request.form['today']):
-            flash("Date of birth cannot be in the future.", "register")
-            is_valid = False
+        # # FUTURE DATE OF BIRTH VALIDATION
+        # if data['date_of_birth'] > str(request.form['today']):
+        #     flash("Date of birth cannot be in the future.", "register")
+        #     is_valid = False
 
         # USERNAME VALIDATION
-        if len(user['username']) < 2:
+
+        if len(data['username']) < 2:
             flash("Username must be at least 2 characters long.", "register")
             is_valid = False
 
+        # EMAIL VALIDATION
+        if not EMAIL_REGEX.match(data['email']):
+            flash("Invalid email address.", "register")
+            is_valid = False
+
+
+
+
         # PASSWORD VALIDATION
-        if len(user['password']) < 8:
+        if len(data['password']) < 8:
+            flash("Password must be at least 8 characters long.", "register")
+            is_valid = False
+
+
+        if len(data['confirm_password']) < 8:
             flash("Password must be at least 8 characters long.", "register")
             is_valid = False
 
         # CONFIRM PASSWORD VALIDATION
-        if user['password'] != user['confirm_password']:
+        if data['password'] != data['confirm_password']:
             flash("Passwords do not match.", "register")
             is_valid = False
 

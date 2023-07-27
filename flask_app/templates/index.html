@@ -80,7 +80,7 @@
 
     <!-- Login Form -->
 
-    <form class="column my-4" style="display: inline-block;" action="/login/redirect" method="POST">
+    <form class="column my-4" style="display: inline-block;" action="/login/user" method="post">
         <!-- Flash Messages -->
         <div class="message is-danger mx-auto text-center">
             {% with messages = get_flashed_messages() %}
@@ -98,7 +98,7 @@
         <div class="field">
             <label class="label">Email</label>
             <div class="control has-icons-left has-icons-right">
-            <input class="input is-danger" type="email" placeholder="Email" value="" />
+            <input class="input is-danger" type="email" placeholder="Email" value="" name="email" />
             <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
             <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
             </div>
@@ -106,7 +106,7 @@
         <div class="field">
             <label class="label">Password</label>
             <div class="control has-icons-left has-icons-right">
-            <input class="input is-danger" type="password" placeholder="" value="password" />
+            <input class="input is-danger" type="password" placeholder="" value="password" name="password"/>
             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
             <span class="icon is-small is-right"><i class="fas fa-exclamation-triangle"></i></span>
             </div>
