@@ -18,10 +18,6 @@ def login():
         return render_template('dashboard.html')
     return render_template('login.html')
 
-# from flask_app.models import User, Review, Items
-# from flask_app.controllers import items
-from flask_bcrypt import Bcrypt
-bcrypt = Bcrypt(app)
 
 #login user
 @app.route('/login/user', methods=['POST'])
@@ -33,7 +29,7 @@ def login_user():
     if not bcrypt.check_password_hash(one_user.password, request.form['password']):
         flash('Password or username do not match our records', 'login')
         return redirect('/')
-    session['logged_in_id'] = one_user
+    session['logged_in_id'] = one_user.id
     return redirect ('/success')
 
 # create user
@@ -66,7 +62,8 @@ def login_redirect():
     data = {
         'id': session['logged_in_id']
     }
-    return render_template ('dashboard.html', all_posts=items.Items.get_all_items(), one_user=register.User.get_by_id)
+    print(data)
+    return render_template ('dashboard.html', all_posts=items.Items.get_all_items(), one_user=register.User.get_by_id(data))
 
 #payment info
 @app.route('/payment')
