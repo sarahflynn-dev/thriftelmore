@@ -2,6 +2,8 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash, request
 import re
+from datetime import datetime
+from flask_app.models import items, reviews
 
 # Email Format Validation
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
@@ -89,10 +91,10 @@ class User:
             flash("Date of birth must be entered.", "register")
             is_valid = False
 
-        # # FUTURE DATE OF BIRTH VALIDATION
-        # if data['date_of_birth'] > str(request.form['today']):
-        #     flash("Date of birth cannot be in the future.", "register")
-        #     is_valid = False
+        # FUTURE DATE OF BIRTH VALIDATION
+        if data['date_of_birth'] > str(datetime.now()):
+            flash("Date of birth must be in the past.", "register")
+            is_valid = False
 
         # USERNAME VALIDATION
 
@@ -105,14 +107,10 @@ class User:
             flash("Invalid email address.", "register")
             is_valid = False
 
-
-
-
         # PASSWORD VALIDATION
         if len(data['password']) < 8:
             flash("Password must be at least 8 characters long.", "register")
             is_valid = False
-
 
         if len(data['confirm_password']) < 8:
             flash("Password must be at least 8 characters long.", "register")
