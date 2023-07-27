@@ -4,7 +4,7 @@ import os
 app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = os.path.realpath(
-    os.getcwd() + '/flask_app/uploads')
+    os.getcwd() + '/flask_app/static/uploads')
 
 app.secret_key = "thrify is nifty"
 
