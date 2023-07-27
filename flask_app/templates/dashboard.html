@@ -47,7 +47,7 @@
                 <h1 class="h1 is-italic my-auto">Hello, {{one_user.first_name}}!</h1>
             </div>
             <div class="buttons are-medium">
-                <button class="button is-danger is-inverted">New Post</button>
+                <button class="button is-danger is-inverted"><a href="/new/item">New Post</a></button>
                 <button class="button is-danger is-inverted">My Cart</button>
                 <button class="button is-danger is-inverted">My Payment</button>
             </div>
@@ -55,7 +55,7 @@
     </div>
 
     <!-- the post body -->
-    {% for item in items%}
+    {% for item in my_items%}
     {% if item.user_id == session.user_id %}
             <div class="mx-3 p-3 box d-flex">
                 <div class="image is-128x128">
