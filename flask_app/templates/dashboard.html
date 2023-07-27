@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thriftlemore | Dashboard</title>
     <link rel="icon" type="svg" href="../static/icon/logo-smile-red.svg" />
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" />
@@ -34,17 +33,18 @@
         <a href="/login">Cart</a>
     </li>
     <li>
-        <a href="/login">Logout</a>
+        <a href="/logout/user">Logout</a>
     </li>
     </ul>
 </nav>
+ 
 <body style="font-family: coolvetica; letter-spacing: 1px;">
-    <!-- just a title no longer! -->
+    just a title no longer!
     <div class="p-4 has-background-danger-dark has-text-black pb-3">
         <div style="font-family: mont;" class="d-flex justify-content-between align-items-center" id="title" onmousedown="refresh()" onmouseup="reset()">
             <div class="d-flex">
                 <div class="logo mx-2"><img src="../static/icon/thriftlo.svg" width="70px" id="logo" /></div>
-                <h1 class="h1 is-italic my-auto">Hello, {{user.first_name}}!</h1>
+                <h1 class="h1 is-italic my-auto">Hello, {{one_user.first_name}}!</h1>
             </div>
             <div class="buttons are-medium">
                 <button class="button is-danger is-inverted">New Post</button>
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <!--the post body-->
+    <!-- the post body -->
     {% for item in items%}
     {% if item.user_id == session.user_id %}
             <div class="mx-3 p-3 box d-flex">

@@ -1,10 +1,10 @@
 from flask_app import app
 from flask import render_template, redirect, request, session, flash
 
-from flask_app.models.user import User
-from flask_app.models.review import Review
-from flask_app.models.item import Items
-#from flask_app.models import users, reviews, items
+# from flask_app.models.user import User
+# from flask_app.models.review import Review
+# from flask_app.models.item import Items
+from flask_app.models import register, reviews, items
 
 from werkzeug.utils import secure_filename
 import os
@@ -45,7 +45,7 @@ def new_item():
         return redirect ('/')
     return render_template('/new/item.html')
 
-@app.route('/post/new/item' methods=['POST'])
+@app.route('/post/new/item', methods=['POST'])
 def post_new_item():
     if 'logged_in_id' not in session:
         return redirect ('/')
@@ -59,7 +59,7 @@ def edit_item():
         return redirect ('/')
     return render_template('edit/items.html')
 
-@app.route('/update/items', methods='POST')
+@app.route('/update/items', methods=['POST'])
 def update_item():
     if 'logged_in_id' not in session:
         return redirect ('/')
@@ -71,4 +71,3 @@ def update_item():
 def delete_item():
     items.Item.delete_item(request.form)
     return redirect ('my_items')
-
