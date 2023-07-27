@@ -129,4 +129,22 @@ def update_item():
 @app.route('/delete/item', methods=['POST'])
 def delete_item():
     items.Items.delete_item(request.form)
-    return redirect('my_items')
+    return redirect('/return/to/items')
+
+# delete sale item
+@app.route('/return/to/items')
+def return_to_items():
+    # check if 'logged_in_id' is in the session
+    if 'logged_in_id' not in session:
+        print("No logged_in_id in session")  # Debug print
+        return redirect('/')
+    print("Logged in id:", session['logged_in_id'])  # Debug print
+
+    data = {
+        'id': session['logged_in_id']
+    }
+
+    # Fetch items and user from the database
+    my_items = items.Items.get_all_items_by_user(data)
+    one_user = register.User.get_by_id(data)
+    return render_template('/dashboard.html', my_items=my_items, one_user=one_user)
