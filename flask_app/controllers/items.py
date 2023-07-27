@@ -5,7 +5,7 @@ from flask import render_template, redirect, request, session, flash
 # from flask_app.models.review import Review
 # from flask_app.models.item import Items
 from flask_app.models import register, reviews, items
-
+from flask_app.controllers import users
 from werkzeug.utils import secure_filename
 import os
 import re
@@ -36,20 +36,23 @@ def view_cart():
 def my_sale_items():
     if 'logged_in_id' not in session:
         return redirect('/')
-    return render_template('/view/sale_items.html', my_items=items.User.get_all_items_by_user(data))
+    data = {
+        'id': session['logged_in_id']
+    }
+    return render_template('dashboard.html', my_items=items.Items.get_all_items(),one_user=register.User.get_by_id(data))
 
 #post new sale items
 @app.route('/new/item')
 def new_item():
     if 'logged_in_id' not in session:
         return redirect ('/')
-    return render_template('/new/item.html')
+    return render_template('/new_item.html')
 
 @app.route('/post/new/item', methods=['POST'])
 def post_new_item():
     if 'logged_in_id' not in session:
         return redirect ('/')
-    items.Item.save_item(request.form)
+    items.Items.save_item(request.form)
     return redirect('/my_items')
 
 #edit sale items
@@ -71,3 +74,4 @@ def update_item():
 def delete_item():
     items.Item.delete_item(request.form)
     return redirect ('my_items')
+
