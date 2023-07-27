@@ -71,4 +71,3 @@ def update_item():
 def delete_item():
     items.Item.delete_item(request.form)
     return redirect ('my_items')
-
