@@ -68,7 +68,10 @@ def login_redirect():
         'id': session['logged_in_id']
     }
     print(data)
-    return render_template('dashboard.html', all_posts=items.Items.get_all_items(), one_user=register.User.get_by_id(data))
+        # Fetch items and user from the database
+    my_items = items.Items.get_all_items_by_user(data)
+    one_user = register.User.get_by_id(data)
+    return render_template('dashboard.html', my_items=my_items, one_user=one_user)
 
 # payment info
 

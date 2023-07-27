@@ -108,7 +108,9 @@
                             Edit
                         </button>
                     </a>
-                    <a href="/destroy/{{ item.id }}">
+                    <form action="/delete/item" method="post">
+                    <input type="hidden" name="id" value="{{item.id}}">
+                    <a >
                         <button
                             type="submit"
                             onclick="alert('Are you sure you want to delete your post?')"
@@ -117,6 +119,7 @@
                             Delete
                         </button>
                     </a>
+                    </form>
                 </div>
             </div>
         </div>
