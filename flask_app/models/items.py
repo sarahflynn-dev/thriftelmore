@@ -59,9 +59,9 @@ class Items:
 
     # GET ALL ITEMS BY USER
     @classmethod
-    def get_all_items_by_user(cls, data):
+    def get_all_items_by_user(cls):
         query = "SELECT * FROM items WHERE user_id = %(id)s;"
-        results = connectToMySQL(cls.db).query_db(query, data)
+        results = connectToMySQL(cls.db).query_db(query)
 
         items = []
         for row in results:
