@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thriftlemore | Dashboard</title>
+    <link rel="icon" type="svg" href="../static/icon/logo-smile-red.svg" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" />
+    <link rel="stylesheet" type="text/css" href="../static/css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/animations.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <script src="https://kit.fontawesome.com/f65ce6ab07.js" crossorigin="anonymous"></script>
+    <script src="../static/script/refresh.js"></script>
+</head>
+<nav class="breadcrumb is-centered box" aria-label="breadcrumbs">
+    <ul>
+    <li>
+        <a href="/" aria-current="page">Home</a>
+    </li>
+    <li class="is-active">
+        <a href="/login">Dashboard</a>
+    </li>
+    <li>
+        <a href="/login">Sell</a>
+    </li>
+    <li>
+        <a href="/login">Cart</a>
+    </li>
+    <li>
+        <a href="/logout/user">Logout</a>
+    </li>
+    </ul>
+</nav>
+ 
+<body style="font-family: coolvetica, Helvetica, Arial, sans-serif; letter-spacing: 1px;">
+    <!-- just a title no longer! -->
+    <div class="p-4 has-background-danger-dark has-text-black pb-3">
+        <div style="font-family: mont;" class="d-flex justify-content-between align-items-center" id="title" onmousedown="refresh()" onmouseup="reset()">
+            <div class="d-flex">
+                <div class="logo mx-2"><img src="../static/icon/thriftlo.svg" width="70px" id="logo" /></div>
+                <h1 class="h1 is-italic my-auto">Sell Your Items</h1>
+            </div>
+            <div class="buttons are-medium">
+                <a href="/dashboard"><button class="button is-danger is-inverted">Back</button></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- the post body -->
+    <div class="container box mx-auto my-4">
+        <form class="d-flex px-5 mx-auto" action="/update/items/{{ item.id }}" enctype="multipart/form-data" method="POST">
+            <!-- Flash Messages -->
+            <div class="mx-auto pb-5">
+                <div class="message is-danger mx-auto text-center">
+                    {% with messages = get_flashed_messages(category_filter=["register"]) %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <ul>
+                        <li class="message-header">Please correct these errors!</li>
+                        <li class="message-body">{{ message }}</p>
+                    </ul>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            <div class="field">
+                <label class="label">Name</label>
+                <p class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Item Name" name="item_name" value="{{ item.item_name }}" />
+                <span class="icon is-small is-left"><i class="fas fa-money"></i></span>
+            </p>
+            </div>
+            <div class="field">
+                <label class="label">Price</label>
+                <p class="control has-icons-left has-icons-right">
+                <input class="input" type="number" placeholder="Price" name="item_price" value="{{ item.item_price }}" />
+                <span class="icon is-small is-left"><i class="fas fa-money"></i></span>
+            </p>
+            </div>
+            <div class="field">
+                <label class="label">Description</label>
+                <p class="control has-icons-left has-icons-right">
+                <textarea class="textarea" placeholder="Describe your item..." name="item_description">{{ item.item_description }}</textarea>
+            </p>
+            </div>
+
+            <form class="file px-5 mx-5 py-5">
+                <div>
+                    <div class="control mb-2">
+                        <label class="label">Item Type</label>
+                        <div class="select">
+                        <select name="item_type">
+                            <option value="Top">Top</option>
+                            <option value="Jacket">Jacket</option>
+                            <option value="Bottoms">Bottoms</option>
+                            <option value="Undergarments">Undergarments</option>
+                            <option value="Socks">Socks</option>
+                            <option value="Shoes">Shoes</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        </div>
+                    </div>
+                <div>
+                    <label class="label">Photo</label>
+                    <input class="form-control bg-dark-subtle" onchange="readURL(thIs);" type="file" accept=".png, .jpg, .jpeg, .webm, .tiff, .bmp" name="item_picture" id="item_picture">
+                    <script src="../../static/scripts/display_upload.js"></script>
+                </div>
+                <div class="d-flex col mx-auto">
+                    <button type="submit" class="button is-danger is-outlined is-large mt-5 mX-4 is-align-self-flex-end">
+                        <img src="../static/icon/logo-smile-red.svg" type="svg"  width="40px" class="excite" style="padding-right: 10px; margin-left: -10px;">
+                        <img id="preview" class="mt-2" src="#" alt="" />
+                        Let's Go!
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

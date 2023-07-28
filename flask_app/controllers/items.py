@@ -109,19 +109,43 @@ def post_new_item():
 
 
 # edit sale items
-@app.route('/edit/items')
-def edit_item():
+@app.route('/edit/items/<item_id>')
+def edit_item(item_id):
     if 'logged_in_id' not in session:
         return redirect('/')
-    return render_template('edit/items.html')
+
+    # Get item details
+    item = items.Items.get_item_by_id({'id': item_id})
+
+    # Pass item details to the template
+    return render_template('edit_item.html', item=item)
 
 
-@app.route('/update/items', methods=['POST'])
-def update_item():
+# update sale items
+
+
+@app.route('/update/items/<item_id>', methods=['POST'])
+def update_item(item_id):
     if 'logged_in_id' not in session:
         return redirect('/')
-    items.Items.update_item(request.form)
+    form_data = request.form.to_dict()
+    form_data['user_id'] = session['logged_in_id']
+    form_data['id'] = item_id  # Add the item id to the form data
+    print(form_data)
+    # Item Picture
+    if 'item_picture' in request.files:
+        file = request.files['item_picture']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            form_data['item_picture'] = filename
+            print(form_data)
+
+    if not items.Items.validate_item(form_data):
+        return redirect('/edit/items/' + item_id)
+    items.Items.update_item(form_data)
     return redirect('/my_items')
+
 
 # delete sale item
 

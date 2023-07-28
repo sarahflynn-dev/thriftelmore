@@ -69,15 +69,18 @@ class Items:
         return items
 
     # GET ITEM BY ID
-
     @classmethod
     def get_item_by_id(cls, data):
         query = "SELECT * FROM items WHERE id = %(id)s;"
         results = connectToMySQL(cls.db).query_db(query, data)
 
-        return cls(results[0])
+        if results:
+            return cls(results[0])
+        else:
+            return None
 
     # SAVE ITEM
+
     @classmethod
     def save_item(cls, data):
         query = """
@@ -92,7 +95,7 @@ class Items:
     def update_item(cls, data):
         query = """
         UPDATE items SET item_name = %(item_name)s, item_type = %(item_type)s, item_description = %(item_description)s, 
-        item_price = %(item_price)s, item_picture = %(item_picture)s, updated_at = NOW() 
+        item_price = %(item_price)s, item_picture = %(item_picture)s, updated_at = NOW()
         WHERE id = %(id)s;
         """
         results = connectToMySQL(cls.db).query_db(query, data)
@@ -128,11 +131,6 @@ class Items:
         # Item Price
         if len(data['item_price']) < 1:
             flash("Item price must be at least 1 character.")
-            is_valid = False
-
-        # Item Picture
-        if len(data['item_picture']) < 1:
-            flash("Item picture must be at least 1 character.")
             is_valid = False
 
         return is_valid
