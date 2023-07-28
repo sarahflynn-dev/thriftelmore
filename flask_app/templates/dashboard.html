@@ -36,17 +36,14 @@
     </head>
     <nav class="breadcrumb is-centered box" aria-label="breadcrumbs">
         <ul>
-            <li>
-                <a href="/" aria-current="page">Home</a>
-            </li>
             <li class="is-active">
                 <a href="/login">Dashboard</a>
             </li>
             <li>
-                <a href="/login">Sell</a>
+                <a href="/new/item">Sell</a>
             </li>
             <li>
-                <a href="/login">Cart</a>
+                <a href="">Cart</a>
             </li>
             <li>
                 <a href="/logout/user">Logout</a>
@@ -111,7 +108,9 @@
                             Edit
                         </button>
                     </a>
-                    <a href="/destroy/{{ item.id }}">
+                    <form action="/delete/item" method="post">
+                    <input type="hidden" name="id" value="{{item.id}}">
+                    <a >
                         <button
                             type="submit"
                             onclick="alert('Are you sure you want to delete your post?')"
@@ -120,6 +119,7 @@
                             Delete
                         </button>
                     </a>
+                    </form>
                 </div>
             </div>
         </div>

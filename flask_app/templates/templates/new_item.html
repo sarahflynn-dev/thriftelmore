@@ -20,14 +20,17 @@
 </head>
 <nav class="breadcrumb is-centered box" aria-label="breadcrumbs">
     <ul>
+    <li>
+        <a href="/" aria-current="page">Home</a>
+    </li>
     <li class="is-active">
-        <a href="/dashboard.html">Dashboard</a>
+        <a href="/login">Dashboard</a>
     </li>
     <li>
-        <a>Sell</a>
+        <a href="/login">Sell</a>
     </li>
     <li>
-        <a href="">Cart</a>
+        <a href="/login">Cart</a>
     </li>
     <li>
         <a href="/logout/user">Logout</a>
@@ -35,7 +38,7 @@
     </ul>
 </nav>
  
-<body style="font-family: coolvetica; letter-spacing: 1px;">
+<body style="font-family: coolvetica, Helvetica, Arial, sans-serif; letter-spacing: 1px;">
     <!-- just a title no longer! -->
     <div class="p-4 has-background-danger-dark has-text-black pb-3">
         <div style="font-family: mont;" class="d-flex justify-content-between align-items-center" id="title" onmousedown="refresh()" onmouseup="reset()">
@@ -44,16 +47,16 @@
                 <h1 class="h1 is-italic my-auto">Sell Your Items</h1>
             </div>
             <div class="buttons are-medium">
-                <a href="/success"><button class="button is-danger is-inverted">Back</button></a>
+                <a href="/dashboard"><button class="button is-danger is-inverted">Back</button></a>
             </div>
         </div>
     </div>
 
     <!-- the post body -->
-    <div class="container box m-4">
-        <form class="d-flex px-5 mx-5" action="/post/new/item" enctype="multipart/form-data" method="POST">
+    <div class="container box mx-auto my-4">
+        <form class="d-flex px-5 mx-auto" action="/post/new/item" enctype="multipart/form-data" method="POST">
             <!-- Flash Messages -->
-            <div>
+            <div class="mx-auto pb-5">
                 <div class="message is-danger mx-auto text-center">
                     {% with messages = get_flashed_messages(category_filter=["register"]) %}
                     {% if messages %}
@@ -76,7 +79,7 @@
                 <div class="field">
                     <label class="label">Price</label>
                     <p class="control has-icons-left has-icons-right">
-                    <input class="input" type="text" placeholder="Price" name="item_price" />
+                    <input class="input" type="number" placeholder="Price" name="item_price" />
                     <span class="icon is-small is-left"><i class="fas fa-money"></i></span>
                 </p>
                 </div>
@@ -86,47 +89,38 @@
                     <textarea class="textarea" placeholder="Describe your item..." name="item_description"></textarea>
                 </p>
                 </div>
-                <div class="control">
-                    <label class="label" >Clothing Type</label>
-                    <div class="select">
-                    <select name="item_type">
-                        <option value="Top">Top</option>
-                        <option value="Jacket">Jacket</option>
-                        <option value="Bottoms">Bottoms</option>
-                        <option value="Undergarments">Undergarments</option>
-                        <option value="Socks">Socks</option>
-                        <option value="Shoes">Shoes</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    </div>
-                </div>
-            </DIV>
+            </div>
             <div class="file px-5 mx-5 py-5">
                 <div>
-                    <label class="label">Photo</label>
-                    <label class="file-label">
-                    <input class="file-input" type="file" name="item_picture" id="item_picture">
-                    <span class="file-cta">
-                        <span class="file-icon">
-                        <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">
-                        Choose a file…
-                        </span>
-                    </span>
-                    </label>
-                    <div class="">
-                        <script src="../static/script/display_upload.js"></script>
-                        <img id="preview" class="mt-2" src="#" alt="" />
+                    <div class="control mb-2">
+                        <label class="label">Item Type</label>
+                        <div class="select">
+                        <select>
+                            <option value="Top">Top</option>
+                            <option value="Jacket">Jacket</option>
+                            <option value="Bottoms">Bottoms</option>
+                            <option value="Undergarments">Undergarments</option>
+                            <option value="Socks">Socks</option>
+                            <option value="Shoes">Shoes</option>
+                            <option value="Other">Other</option>
+                        </select>
                         </div>
+                    </div>
+                <div>
+                    <label class="label">Photo</label>
+                    <input class="form-control bg-dark-subtle" onchange="readURL(thIs);" type="file" accept=".png, .jpg, .jpeg, .webm, .tiff, .bmp" name="item_picture" id="item_picture">
+                    <script src="../../static/scripts/display_upload.js"></script>
+                </div>
+                <div class="d-flex col mx-auto">
+                    <button type="submit" class="button is-danger is-outlined is-large mt-5 mX-4 is-align-self-flex-end">
+                        <img src="../static/icon/logo-smile-red.svg" type="svg"  width="40px" class="excite" style="padding-right: 10px; margin-left: -10px;">
+                        <img id="preview" class="mt-2" src="#" alt="" />
+                        Let's Go!
+                    </button>
                 </div>
             </div>
-            <!-- -->
-            <div class="px-5 mx-5">
-                <img src="../static/icon/logo-smile-red.svg" type="svg"  width="70px" class="excite">
-                <button type="submit" class="button is-danger is-outlined is-large mt-2 ml-4">Let's Go!</button></a>
-            </div>
-        </form>
-    </div>
+            
+        </div>
+    </form>
 </body>
 </html>
